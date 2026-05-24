@@ -1,0 +1,497 @@
+/* ===================================
+   Wikipedia Dark Theme – style.css
+   =================================== */
+
+/* ---------- CSS Variables ---------- */
+:root {
+  --bg: #202122;
+  --bg-surface: #27292a;
+  --border: #3d3f41;
+  --text-primary: #d8d8d8;
+  --text-muted: #a2a9b1;
+  --accent: #3b82f6; /* blue for lang links */
+  --accent-hover: #60a5fa;
+  --search-btn: #3366cc;
+  --search-btn-hover: #2a55bb;
+  --font-display: "Linux Libertine Display", "Georgia", serif;
+  --font-body: Georgia, "Times New Roman", serif;
+  --font-ui:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --radius: 2px;
+  --transition: 0.18s ease;
+}
+
+/* ---------- Reset & Base ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text-primary);
+  font-family: var(--font-ui);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* ---------- HERO ---------- */
+.hero {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 48px 24px 40px;
+  gap: 0;
+}
+
+/* ---------- Logo area (title only, globe inside grid) ---------- */
+.logo-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 32px;
+  animation: fadeDown 0.6s ease both;
+}
+
+/* hide the top standalone globe – we show it inside the grid */
+.logo-area .globe {
+  display: none;
+}
+
+.site-title h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 5vw, 3.6rem);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: #f8f9fa;
+  text-align: center;
+}
+
+.tagline {
+  font-family: var(--font-ui);
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  text-align: center;
+  margin-top: 2px;
+}
+
+/* ---------- Language Grid ---------- */
+.lang-grid {
+  display: grid;
+  grid-template-columns: 1fr 220px 1fr;
+  grid-template-rows: repeat(5, auto);
+  gap: 8px 0;
+  width: 100%;
+  max-width: 720px;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+/* Globe in center column, spans all rows */
+.globe-center {
+  grid-column: 2;
+  grid-row: 1 / 6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.globe-img {
+  width: 190px;
+  height: 190px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 24px rgba(0, 0, 0, 0.5));
+  animation: spinIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* Language card base */
+.lang-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 16px;
+  color: var(--text-primary);
+  transition:
+    color var(--transition),
+    transform var(--transition);
+  cursor: pointer;
+}
+
+.lang-card:hover {
+  transform: scale(1.04);
+}
+
+/* Left cards align right, right cards align left */
+.lang-card.top-left,
+.lang-card.mid-left-1,
+.lang-card.mid-left-2,
+.lang-card.mid-left-3,
+.lang-card.bot-left {
+  grid-column: 1;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.lang-card.top-right,
+.lang-card.mid-right-1,
+.lang-card.mid-right-2,
+.lang-card.mid-right-3,
+.lang-card.bot-right {
+  grid-column: 3;
+  align-items: flex-start;
+  text-align: left;
+}
+
+/* Row placement */
+.lang-card.top-left,
+.lang-card.top-right {
+  grid-row: 1;
+}
+.lang-card.mid-left-1,
+.lang-card.mid-right-1 {
+  grid-row: 2;
+}
+.lang-card.mid-left-2,
+.lang-card.mid-right-2 {
+  grid-row: 3;
+}
+.lang-card.mid-left-3,
+.lang-card.mid-right-3 {
+  grid-row: 4;
+}
+.lang-card.bot-left,
+.lang-card.bot-right {
+  grid-row: 5;
+}
+
+/* Top languages larger */
+.lang-card.top-left .lang-name,
+.lang-card.top-right .lang-name {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+.lang-card.top-left:hover .lang-name,
+.lang-card.top-right:hover .lang-name {
+  color: var(--accent-hover);
+}
+
+/* Other languages */
+.lang-card .lang-name {
+  font-size: 0.97rem;
+  font-weight: 500;
+  color: #8fafd4;
+  transition: color var(--transition);
+}
+.lang-card:hover .lang-name {
+  color: var(--accent-hover);
+}
+
+.lang-card .lang-count {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 1px;
+}
+
+/* ---------- Search Area ---------- */
+.search-area {
+  width: 100%;
+  max-width: 500px;
+  margin-bottom: 24px;
+  animation: fadeUp 0.6s 0.3s ease both;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  background: var(--bg-surface);
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  transition:
+    border-color var(--transition),
+    box-shadow var(--transition);
+}
+
+.search-box:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.search-box input {
+  flex: 1;
+  padding: 10px 14px;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  font-family: var(--font-ui);
+}
+
+.search-box input::placeholder {
+  color: var(--text-muted);
+}
+
+.lang-select {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 12px;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  border-left: 1px solid var(--border);
+  height: 100%;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.lang-select:hover {
+  color: var(--text-primary);
+}
+
+.search-btn {
+  background: var(--search-btn);
+  border: none;
+  cursor: pointer;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--transition);
+}
+
+.search-btn:hover {
+  background: var(--search-btn-hover);
+}
+
+/* ---------- Read in Language button ---------- */
+.read-lang {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 500px;
+  animation: fadeUp 0.6s 0.45s ease both;
+}
+
+.divider-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.read-lang-btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 18px;
+  background: #2d3748;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  font-family: var(--font-ui);
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background var(--transition),
+    border-color var(--transition);
+}
+
+.read-lang-btn:hover {
+  background: #364053;
+  border-color: #555c6a;
+}
+
+.translate-icon {
+  display: flex;
+  align-items: center;
+  color: var(--accent);
+}
+
+/* ---------- Section Divider ---------- */
+.section-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 0;
+}
+
+/* ---------- Wikimedia Footer ---------- */
+.wikimedia-footer {
+  padding: 32px 40px;
+  display: flex;
+  gap: 48px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.footer-brand {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  max-width: 320px;
+  flex-shrink: 0;
+}
+
+.wm-logo {
+  width: 44px;
+  height: auto;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.footer-brand p {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* Footer sister projects grid */
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px 32px;
+  align-items: center;
+  flex: 1;
+}
+
+.footer-link-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #8fafd4;
+  font-size: 0.82rem;
+  transition: color var(--transition);
+}
+
+.footer-link-item:hover {
+  color: var(--accent-hover);
+}
+
+.footer-link-item img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  filter: brightness(0.9);
+}
+
+/* ---------- Animations ---------- */
+@keyframes fadeDown {
+  from {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spinIn {
+  from {
+    opacity: 0;
+    transform: scale(0.7) rotate(-15deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+/* Staggered lang-card fade-in */
+.lang-card {
+  animation: fadeUp 0.5s ease both;
+}
+.lang-card.top-left {
+  animation-delay: 0.1s;
+}
+.lang-card.top-right {
+  animation-delay: 0.12s;
+}
+.lang-card.mid-left-1 {
+  animation-delay: 0.18s;
+}
+.lang-card.mid-right-1 {
+  animation-delay: 0.2s;
+}
+.lang-card.mid-left-2 {
+  animation-delay: 0.26s;
+}
+.lang-card.mid-right-2 {
+  animation-delay: 0.28s;
+}
+.lang-card.mid-left-3 {
+  animation-delay: 0.34s;
+}
+.lang-card.mid-right-3 {
+  animation-delay: 0.36s;
+}
+.lang-card.bot-left {
+  animation-delay: 0.42s;
+}
+.lang-card.bot-right {
+  animation-delay: 0.44s;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 640px) {
+  .lang-grid {
+    grid-template-columns: 1fr 140px 1fr;
+  }
+  .globe-img {
+    width: 130px;
+    height: 130px;
+  }
+
+  .lang-card .lang-name {
+    font-size: 0.82rem;
+  }
+  .lang-card.top-left .lang-name,
+  .lang-card.top-right .lang-name {
+    font-size: 0.95rem;
+  }
+  .lang-card .lang-count {
+    font-size: 0.68rem;
+  }
+
+  .wikimedia-footer {
+    flex-direction: column;
+    gap: 24px;
+    padding: 24px 20px;
+  }
+  .footer-brand {
+    max-width: 100%;
+  }
+}
